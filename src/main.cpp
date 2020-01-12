@@ -1,244 +1,128 @@
+/*
+*  Copyright [2020] [Hans Jørgen Grimstad]
+*  
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*  
+*      http://www.apache.org/licenses/LICENSE-2.0
+*  
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+*/
+
 #include <Arduino.h>
-#include <Adafruit_VL53L0X.h>
-#include <BLEPeripheral.h>
+#include <Wire.h>
+#include <Adafruit_Microbit.h>
+#include "pinout.h"
+#include "proximity_sensor.h"
+#include "IOExpander.h"
+#include "motor.h"
 
-const int SW_SENSE_PIN = 6;
-const int SE_SENSE_PIN = 7;
-const int NW_SENSE_PIN = 8;
-const int NE_SENSE_PIN = 9;
+Adafruit_Microbit_Matrix display;
+IOExpander io;
+ProximitySensorArray front_sensor(&io);
+Motor motor(&io);
 
-const int XSHUT_CENTER = 16;
-const int XSHUT_RIGHT = 13;
-const int XSHUT_LEFT = 10;
-
-const int OUT_OF_RANGE = 4;
-const bool NO_DEBUG = false;
-
-const int LEFT_INPUT1 = 0;
-const int LEFT_INPUT2 = 1;
-const int RIGHT_INPUT1 = 2;
-const int RIGHT_INPUT2 = 3;
-const int LEFT_SPEED = 4;
-const int RIGHT_SPEED = 4; 
-
-Adafruit_VL53L0X lox_center = Adafruit_VL53L0X();
-Adafruit_VL53L0X lox_left = Adafruit_VL53L0X();
-Adafruit_VL53L0X lox_right = Adafruit_VL53L0X();
-
-VL53L0X_RangingMeasurementData_t center_measure;
-VL53L0X_RangingMeasurementData_t left_measure;
-VL53L0X_RangingMeasurementData_t right_measure;
-
-enum RANGINING_SENSOR_ID 
-{
-  LEFT,
-  CENTER,
-  RIGHT
-};
-
- char msg[128];
-
-
-void resetRangingSensorArray() 
-{
-  digitalWrite(XSHUT_CENTER, LOW);
-  digitalWrite(XSHUT_LEFT, LOW);
-  digitalWrite(XSHUT_RIGHT, LOW);
-  delay(10);
-
-  digitalWrite(XSHUT_CENTER, HIGH);
-  digitalWrite(XSHUT_LEFT, HIGH);
-  digitalWrite(XSHUT_RIGHT, HIGH);
-  delay(10);
-
-  digitalWrite(XSHUT_CENTER, LOW);
-  digitalWrite(XSHUT_LEFT, LOW);
-  digitalWrite(XSHUT_RIGHT, LOW);
-}
-
-
-
-void activateRangingSensor(RANGINING_SENSOR_ID id, Adafruit_VL53L0X & sensor, int i2c_address) 
-{
-  sprintf(msg, "Attempting to boot VL53L0X at address :0x%02X", i2c_address);
-  Serial.println(msg);
-
-  switch (id) {
-    case LEFT:    digitalWrite(XSHUT_LEFT, HIGH);
-                  break;
-    case CENTER:  digitalWrite(XSHUT_CENTER, HIGH);
-                  break;
-    case RIGHT:   digitalWrite(XSHUT_RIGHT, HIGH);
-                  break;
-  }
-  delay(10);
- 
-  while (!sensor.begin(i2c_address)) {
-    sprintf(msg, "Failed to boot VL53L0X at address :0x%02X", i2c_address);
-    Serial.println(msg);
-    delay(100);
-  }
-  sprintf(msg, "VL53L0X booted at address :0x%02X", i2c_address);
-  Serial.println(msg);
-}
-
-void initMotors()
-{
-  pinMode(LEFT_INPUT1, OUTPUT);
-  pinMode(LEFT_INPUT2, OUTPUT);
-  pinMode(RIGHT_INPUT1, OUTPUT);
-  pinMode(RIGHT_INPUT2, OUTPUT);
-  pinMode(LEFT_SPEED, OUTPUT);
-  pinMode(RIGHT_SPEED, OUTPUT); 
-
-  digitalWrite(LEFT_INPUT1, 0);
-  digitalWrite(LEFT_INPUT2, 0);
-  digitalWrite(RIGHT_INPUT1, 0);
-  digitalWrite(RIGHT_INPUT2, 0);
-  analogWrite(LEFT_SPEED, 0);
-  analogWrite(RIGHT_SPEED, 0);
-}
-
-void initSensorArray()
-{
-  // We're overriding the default micro:bit GPIO settings here. Don't expect
-  // the LED matrix or buttons to function correctly in this version
-  // Line sensors
-  pinMode(SW_SENSE_PIN, INPUT);
-  pinMode(SE_SENSE_PIN, INPUT);
-  pinMode(NW_SENSE_PIN, INPUT);
-  pinMode(NE_SENSE_PIN, INPUT);
-
-  // VL53L0X pins
-  pinMode(XSHUT_CENTER, OUTPUT);
-  pinMode(XSHUT_LEFT, OUTPUT);
-  pinMode(XSHUT_RIGHT, OUTPUT);
-
-  resetRangingSensorArray();
-  activateRangingSensor(LEFT, lox_left, 0x70);
-  activateRangingSensor(RIGHT, lox_right, 0x71);
-  activateRangingSensor(CENTER, lox_center, 0x72);
-}
-
+#ifndef UNIT_TEST 
 void setup() 
 {
   Serial.begin(115200);
-  delay(1000);
-  initMotors();
-  initSensorArray();
+  delay(2000);
+
+  display.begin();
+  Wire.setClock(100000);
+  Wire.begin();
+  io.begin();
+  front_sensor.begin();
+  motor.begin();
 
   Serial.println("Sumo robot demo is ready!");
 }
 
-void TestRangingSensors() {
-  Serial.println("TestRangingSensors");
-  lox_center.rangingTest(&center_measure, NO_DEBUG); 
-  lox_left.rangingTest(&left_measure, NO_DEBUG);
-  lox_right.rangingTest(&right_measure, NO_DEBUG);
+void display_triggered_line_sensors()
+{
+  int nw = io.get_value(NW_SENSE_PIN);
+  int ne = io.get_value(NE_SENSE_PIN);
+  int sw = io.get_value(SW_SENSE_PIN);
+  int se = io.get_value(SE_SENSE_PIN);
 
-  // print center sensorreading
-  Serial.print("C: ");
-  if (center_measure.RangeStatus != OUT_OF_RANGE) {
-    Serial.print(center_measure.RangeMilliMeter);
-  } else {
-    Serial.print("Out of range");
-  }
-  Serial.print("\n");
-
-  // print left sensorreading
-  Serial.print("L: ");
-  if (left_measure.RangeStatus != OUT_OF_RANGE) {
-    Serial.print(left_measure.RangeMilliMeter);
-  } else {
-    Serial.print("Out of range");
-  }
-  Serial.print("\n");
-
-  // print right sensorreading
-  Serial.print("R: ");
-  if (right_measure.RangeStatus != OUT_OF_RANGE) {
-    Serial.print(right_measure.RangeMilliMeter);
-  } else {
-    Serial.print("Out of range");
-  }
-  Serial.print("\n");
+  display.drawPixel(4,0,!nw);
+  display.drawPixel(0,0,!ne);
+  display.drawPixel(4,4,!sw);
+  display.drawPixel(0,4,!se);
 }
 
-
-void TestLineSensors() 
+void display_proximity_bar_graphs()
 {
-  for (;;) {
-    char buffer[100];
+  // Ignoring stuff that is farther away than 50cm
+  int c = front_sensor.get_center_range();
+  if (c > 250)
+    c = 250;
+  int l = front_sensor.get_left_range();
+  if (l > 250)
+    l = 250;
+  int r = front_sensor.get_right_range();
+  if (r > 250)
+    r = 250;
 
-    int sw, se, nw, ne;
+  c = (250-c)/50;
+  l = (250-l)/50;
+  r = (250-r)/50;
+  
+  display.drawLine(1,0,1,4,0);
+  display.drawLine(2,0,2,4,0);
+  display.drawLine(3,0,3,4,0);
 
-    sw = digitalRead(SW_SENSE_PIN);
-    se = digitalRead(SE_SENSE_PIN);
-    nw = digitalRead(NW_SENSE_PIN);
-    ne = digitalRead(NE_SENSE_PIN);
+  if (r > 0)
+    display.drawLine(1,r,1,0,1);
+  if (c > 0)
+    display.drawLine(2,c,2,0,1);
+  if (l > 0)
+    display.drawLine(3,l,3,0,1);
 
-    sprintf(buffer, "%d %d %d %d", sw, se, nw, ne);
-    Serial.println(buffer);
-  }
-}
-
-void Forward()
-{
-  digitalWrite(LEFT_INPUT1, 1);
-  digitalWrite(LEFT_INPUT2, 0);
-  digitalWrite(RIGHT_INPUT1, 0);
-  digitalWrite(RIGHT_INPUT2, 1);
-}
-
-void Reverse() 
-{
-  digitalWrite(LEFT_INPUT1, 0);
-  digitalWrite(LEFT_INPUT2, 1);
-  digitalWrite(RIGHT_INPUT1, 1);
-  digitalWrite(RIGHT_INPUT2, 0);
-}
-
-void TurnLeft() 
-{
-  digitalWrite(LEFT_INPUT1, 0);
-  digitalWrite(LEFT_INPUT2, 1);
-  digitalWrite(RIGHT_INPUT1, 0);
-  digitalWrite(RIGHT_INPUT2, 1);
-}
-
-void TurnRight()
-{
-  digitalWrite(LEFT_INPUT1, 1);
-  digitalWrite(LEFT_INPUT2, 0);
-  digitalWrite(RIGHT_INPUT1, 1);
-  digitalWrite(RIGHT_INPUT2, 0);
-}
-
-void SetSpeed(int speed) 
-{
-  analogWrite(LEFT_SPEED, speed);
-  analogWrite(RIGHT_SPEED, speed);
 }
 
 void loop() 
 {
-  // Simple demo. 
-  //  Full speed ahead. 
-  //  If an object is determined to be closer than 15 cm by the center sensor then
-  //    Reverse for half a second 
-  //    Then turn left for 100ms. 
-  //  Repeat
-  SetSpeed(255);
-  Forward();
-  lox_center.rangingTest(&center_measure, NO_DEBUG);
-  if (center_measure.RangeStatus != OUT_OF_RANGE) {  
-    Serial.println(center_measure.RangeMilliMeter);
-    if (center_measure.RangeMilliMeter < 150) {
-      Serial.println("   Reversing");
-      Reverse();
-      delay(500);
-      TurnLeft();
-      delay(100);
+  // Sensor demo
+  // 1) A triggered line sensor will light up a LED in the corresponding corner of the display
+  // 2) Objects in proximity to the range sensors will 
+ 
+    // Scan inputs (GPIO on expansion header and hard wired line sensors)
+    io.scan();  
+    // Scan for collisions (front proximity sensors)
+    front_sensor.scan(); 
+
+    // Simple demo. Just reversing direction and turning left
+    // if the front sensor detects an object that is closer than 15 cm
+    if (front_sensor.get_center_range() < 150) 
+    {
+      motor.reverse();
+      delay(150);
+      motor.turn_left();
+      delay(250);
     }
-  } 
+    else {
+      motor.forward();
+    }
+
+    // We'll display a pixel in the corresponding corner
+    // of the matrix for each line sensor that is triggered
+    // and a "bargraph" (representing the proximity of objects 
+    // in front of the three proximity sensors) for each of the
+    // three center columns in the matrix
+    display_triggered_line_sensors();
+    display_proximity_bar_graphs();
+
+    // And finally, let's just blink the center pixel to indicate 
+    // that the code is running.
+    display.drawPixel(2,2,1);
+    delay(100);
+    display.drawPixel(2,2,0);
+    delay(100);
 }
+#endif
