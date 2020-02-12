@@ -14,9 +14,13 @@
 *  limitations under the License.
 */
 
-#include <Arduino.h>
+#include "mbed.h"
+#include "i2c_address_map.h"
 #include "IOExpander.h"
-#include "Wire.h"
+#include "ErrorNo.h"
+
+extern I2C i2c;
+
 
 char msgBuf[128];
 
@@ -24,32 +28,25 @@ IOExpander::IOExpander() :
     _PIN0(0), 
     _PIN1(0) 
 {
+    configure_port0();
+    configure_port1();
 }
 
 void IOExpander::write_register(uint8_t reg, uint8_t value)
 {
-    Wire.beginTransmission(TCA9539_ADDRESS);
-    Wire.write(reg);
-    Wire.write(value);  
-    if (0 != Wire.endTransmission())
-    {
-        sprintf(msgBuf, "Write %02X to register %02X failed.", value, reg);
-        Serial.println(msgBuf);
-    }
+  char buf[2];
+  buf[0] = reg;
+  buf[1] = value;
+  i2c.write(TCA9539_I2C_ADDRESS, buf, 2);
 }
  
 uint8_t IOExpander::read_register(uint8_t reg)
 {
-    Wire.beginTransmission(TCA9539_ADDRESS);
-    Wire.write(reg);
-    if (0!= Wire.endTransmission())
-    {
-        Serial.print("Read ");
-        Serial.print(reg);
-        Serial.println(" register failed");
-    }
-    Wire.requestFrom(TCA9539_ADDRESS, 1);
-    return Wire.read();
+    char value;
+    char data = reg;
+    i2c.write(TCA9539_I2C_ADDRESS, &data, 1, true);
+    i2c.read(TCA9539_I2C_ADDRESS, &value, 1);
+    return value;
 }
 
 void IOExpander::configure_port0()
@@ -70,6 +67,7 @@ void IOExpander::scan()
 
 uint8_t IOExpander::get_value(uint8_t pin)
 {
+    scan();
     if (pin < 8) 
         return _PIN0 & pinMap[pin];
     return _PIN1 & pinMap[pin];
@@ -77,14 +75,14 @@ uint8_t IOExpander::get_value(uint8_t pin)
 
 void IOExpander::set_value(uint8_t pin, uint8_t value)
 {
-    uint8_t port = OUTPUT_PORT1;
+    char port = OUTPUT_PORT1;
     if (pin < 8) {
         port = OUTPUT_PORT0;
     }
 
-    uint8_t state = read_register(port);
+    char state = read_register(port);
 
-    uint8_t newState;
+    char newState;
     if (HIGH == value)
     {
         newState = state | pinMap[pin];    // set bit
@@ -94,10 +92,11 @@ void IOExpander::set_value(uint8_t pin, uint8_t value)
         newState = state & ~(pinMap[pin]);   // clear bit
     }
 
-    Wire.beginTransmission(TCA9539_ADDRESS);
-    Wire.write(port);
-    Wire.write(newState);    
-    Wire.endTransmission();
+    char buf[2];
+    buf[0] = port;
+    buf[1] = newState;
+    if (MICROBIT_OK != i2c.write(TCA9539_I2C_ADDRESS, &buf[0], 2))
+         printf("ERROR: IOExpander::set_value\r\n");
 }
 
 bool IOExpander::line_sensor_hit()
@@ -105,8 +104,3 @@ bool IOExpander::line_sensor_hit()
     return (read_register(INPUT_PORT0) & 0b01111000) != 0b01111000;
 }
 
-void IOExpander::begin()
-{
-    configure_port0();
-    configure_port1();
-}

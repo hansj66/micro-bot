@@ -17,15 +17,14 @@
 #ifndef _TCA9539_H_
 #define _TCA9539_H_
 
-#include "wire.h"
-
-const int TCA9539_ADDRESS = 0x74;
+#define HIGH 1
+#define LOW 0
 
 const int XSHUT_RIGHT           = 0;    // C0.0
 const int XSHUT_LEFT            = 1;    // C0.1
 const int XSHUT_CENTER          = 2;    // C0.2
 const int NW_SENSE_PIN          = 3;    // C0.3
-const int NE_SENSE_PIN          = 4;    // C0.4
+const int NE_SENSE_PIN          = 4;    // C0.475
 const int SW_SENSE_PIN          = 5;    // C0.5
 const int SE_SENSE_PIN          = 6;    // C0.6
 const int GPIO_1                = 7;    // C0.7
@@ -58,12 +57,10 @@ class IOExpander
 {
     public:
         IOExpander();
-        void begin();
         void scan();
         uint8_t get_value(uint8_t pin);
         void set_value(uint8_t pin, uint8_t value);
         bool line_sensor_hit();
-
 
     private:
         void configure_port0();

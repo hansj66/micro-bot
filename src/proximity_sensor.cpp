@@ -15,99 +15,56 @@
 */
 
 #include "proximity_sensor.h"
+#include "i2c_address_map.h"
 #include "IOExpander.h"
 
-Adafruit_VL53L0X lox_center = Adafruit_VL53L0X();
-Adafruit_VL53L0X lox_left = Adafruit_VL53L0X();
-Adafruit_VL53L0X lox_right = Adafruit_VL53L0X();
-
-
 ProximitySensorArray::ProximitySensorArray(IOExpander * io) : 
-  _io(io),
-  _left(MAX_RANGE),
-  _center(MAX_RANGE),
-  _right(MAX_RANGE)
+  _io(io)
 {
+  xshutdown();
+
+  assignSensorI2CAddress(_left, XSHUT_LEFT, VL53L0X_I2C_ADDRESS_LEFT);
+  assignSensorI2CAddress(_center, XSHUT_CENTER, VL53L0X_I2C_ADDRESS_CENTER);
+  assignSensorI2CAddress(_right, XSHUT_RIGHT, VL53L0X_I2C_ADDRESS_RIGHT);
 }
 
-void ProximitySensorArray::begin()
-{
-  Serial.println("Initializing time of flight sensors");
-
-  reset();
-  activate(LEFT, lox_left, 0x70);
-  activate(RIGHT, lox_right, 0x71);
-  activate(CENTER, lox_center, 0x72);
-}
-
-void ProximitySensorArray::reset() 
+// xshutdown pulls all the XSHUT signals low and thereby 
+// also causes all VL53L0X sensors to enter hardware reset state.
+void ProximitySensorArray::xshutdown()
 {
   _io->set_value(XSHUT_CENTER, LOW);
   _io->set_value(XSHUT_LEFT, LOW);
   _io->set_value(XSHUT_RIGHT, LOW);
-  delay(10);
-
-  _io->set_value(XSHUT_CENTER, HIGH);
-  _io->set_value(XSHUT_LEFT, HIGH);
-  _io->set_value(XSHUT_RIGHT, HIGH);
-  delay(10);
-
-  _io->set_value(XSHUT_CENTER, LOW);
-  _io->set_value(XSHUT_LEFT, LOW);
-  _io->set_value(XSHUT_RIGHT, LOW);
+   wait_ms(10);
 }
 
-
-void ProximitySensorArray::activate(RANGINING_SENSOR_ID id, Adafruit_VL53L0X & sensor, int i2c_address) 
+// assignSensorI2CAddress brings a sensor out of reset state, initializes
+// the sensor and assigns a new I2C address to it (default is 0x29 (7 bit))
+void ProximitySensorArray::assignSensorI2CAddress(VL53L0X & sensor, uint8_t xshutPin, uint8_t address)
 {
-  char msg[128];
-
-  switch (id) 
+  _io->set_value(xshutPin, HIGH);
+  wait_ms(1);
+  if (!sensor.init()) 
   {
-    case LEFT:    _io->set_value(XSHUT_LEFT, HIGH);
-                  break;
-    case CENTER:  _io->set_value(XSHUT_CENTER, HIGH);
-                  break;
-    case RIGHT:   _io->set_value(XSHUT_RIGHT, HIGH);
-                  break;
+    printf("ProximitySensorArray::assignSensorI2CAddress - FAILED\r\n");
   }
-  delay(10);
- 
-  while (!sensor.begin(i2c_address)) 
-  {
-    sprintf(msg, "Failed to boot VL53L0X at address :0x%02X", i2c_address);
-    Serial.println(msg);
-    delay(100);
-  }
-  sprintf(msg, "VL53L0X booted at address :0x%02X", i2c_address);
-  Serial.println(msg);
+  sensor.setAddress(address);
+  wait_ms(150);
 }
 
-void ProximitySensorArray::scan()
+uint16_t ProximitySensorArray::leftRange()
 {
-  _left = MAX_RANGE;
-  _center = MAX_RANGE;
-  _right = MAX_RANGE;
-  VL53L0X_RangingMeasurementData_t center_measure;
-  VL53L0X_RangingMeasurementData_t left_measure;
-  VL53L0X_RangingMeasurementData_t right_measure;
-
-  lox_center.rangingTest(&center_measure, NO_DEBUG);
-  if (center_measure.RangeStatus != OUT_OF_RANGE) 
-  {  
-    _center = center_measure.RangeMilliMeter;
-  }
-  delay(50);  
-  lox_left.rangingTest(&left_measure, NO_DEBUG);
-  if (left_measure.RangeStatus != OUT_OF_RANGE) 
-  {  
-    _left = left_measure.RangeMilliMeter;
-  }
-  delay(50);
-  lox_right.rangingTest(&right_measure, NO_DEBUG);
-  if (right_measure.RangeStatus != OUT_OF_RANGE) 
-  {  
-    _right = right_measure.RangeMilliMeter;
-  }
-  delay(50);
+  return _left.readRangeSingleMillimeters();
 }
+
+uint16_t ProximitySensorArray::centerRange()
+{
+  return _center.readRangeSingleMillimeters();
+}
+
+uint16_t ProximitySensorArray::rightRange()
+{
+  return _right.readRangeSingleMillimeters();
+}
+
+

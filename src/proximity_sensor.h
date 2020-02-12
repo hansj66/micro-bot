@@ -17,42 +17,28 @@
 #ifndef _PROXIMITY_SENSOR_H_
 #define _PROXIMITY_SENSOR_H_
 
-#include <Adafruit_VL53L0X.h>
-#include <BLEPeripheral.h>
+#include "mbed.h"
+#include <VL53L0X.h>
 #include "IOExpander.h"
-
-// VL53L0X
-#define OUT_OF_RANGE 4
-#define NO_DEBUG false
-
-const int MAX_RANGE = 2000;
-
-enum RANGINING_SENSOR_ID 
-{
-  LEFT,
-  CENTER,
-  RIGHT
-};
 
 class ProximitySensorArray
 {
   public:
     ProximitySensorArray(IOExpander * io);
     void begin();
-    void scan();
-    int get_left_range() { return _left; }
-    int get_center_range() { return _center; }
-    int get_right_range() { return _right; }
+    uint16_t leftRange();
+    uint16_t centerRange();
+    uint16_t rightRange();
 
   private:
-    void reset();
-    void activate(RANGINING_SENSOR_ID id, Adafruit_VL53L0X & sensor, int i2c_address);
+    VL53L0X _center;
+    VL53L0X _left;
+    VL53L0X _right;
+
+    void xshutdown();
+    void assignSensorI2CAddress(VL53L0X & sensor, uint8_t xshutPin, uint8_t address);
 
     IOExpander * _io;
-    int _left;
-    int _center;
-    int _right;
-
 };
 
 #endif
