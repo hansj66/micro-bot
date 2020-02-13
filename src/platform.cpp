@@ -10,10 +10,13 @@
 #include "MicroBitDisplay.h"
 #include "graphics.h"
 #include "proximity_sensor.h"
+#include "motor.h"
 
 extern I2C i2c;
 
 extern MicroBitDisplay display;
+extern Motor motor;
+
 
 // InterruptIn doesn't seem to work in this context...
 extern DigitalIn buttonA;
@@ -43,7 +46,9 @@ Platform::Platform(IOExpander * io) :
 
 SELFTEST_EVENT Platform::LineSensorTest()
 {
-    display.print("- TEST - LINE SENSORS -");
+    // display.print("- TEST - LINE SENSORS -");
+    display.printChar('L');
+    wait_ms(500);
     while (true)
     {
         RenderLineSensorResponse(
@@ -61,7 +66,9 @@ SELFTEST_EVENT Platform::LineSensorTest()
 
 SELFTEST_EVENT Platform::RangeSensorTest()
 {
-    display.print("- TEST - RANGE SENSORS -");
+//    display.print("- TEST - RANGE SENSORS -");
+    display.printChar('R');
+    wait_ms(500);
     while (true)
     {
         uint16_t left = front_sensor.leftRange();
@@ -69,7 +76,8 @@ SELFTEST_EVENT Platform::RangeSensorTest()
         uint16_t right = front_sensor.rightRange();
 
         printf("L: %04d C: %04d: R: %04d\r\n", left, center, right);
-
+        
+        // TODO: VISUALIZE
         if (0 == buttonB.read()) 
             return NEXT_TEST;
         if (0 == buttonA.read())
@@ -79,7 +87,32 @@ SELFTEST_EVENT Platform::RangeSensorTest()
 
 SELFTEST_EVENT Platform::MotorTest()
 {
-    return EXIT_TEST;
+    display.printChar('M');
+    wait_ms(500);
+
+    while (true)
+    {
+        motor.forward();
+        for (int i=0; i<1023; i++)
+        {
+            motor.setSpeed(i);
+            if (0 == buttonB.read()) 
+                return NEXT_TEST;
+            if (0 == buttonA.read())
+                return EXIT_TEST;
+            wait_ms(5);
+        }
+        motor.reverse();
+        for (int i=1023; i>0; i--)
+        {
+            motor.setSpeed(i);
+            if (0 == buttonB.read()) 
+                return NEXT_TEST;
+            if (0 == buttonA.read())
+                return EXIT_TEST;
+            wait_ms(5);
+        }
+    }
 }
 
 void Platform::RunSensorTest()
@@ -88,8 +121,8 @@ void Platform::RunSensorTest()
         return;
     if (EXIT_TEST == RangeSensorTest())
         return;
-    if (EXIT_TEST == MotorTest())
-        return;
+    MotorTest();
+    motor.setSpeed(0);
 }
 
 void Platform::RunSelfTestSequence()

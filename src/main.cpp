@@ -22,13 +22,16 @@
 #include "platform.h"
 #include "graphics.h"
 
+#include "MicroBitPin.h"
+
 I2C i2c(I2C_SDA0, I2C_SCL0); 
 
 MicroBitDisplay display;
 IOExpander io;
 ProximitySensorArray front_sensor(&io);
 Platform p(&io);
-// Motor motor(&io);
+Motor motor(&io);
+
 
 DigitalIn buttonA(BUTTON_A);
 DigitalIn buttonB(BUTTON_B);

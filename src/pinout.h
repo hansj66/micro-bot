@@ -18,8 +18,8 @@
 #define _PINOUT_H
 
 // Micro:bit native pinout
-const int LEFT_SPEED = 8;
-const int RIGHT_SPEED = 16; 
+#define LEFT_SPEED P8
+#define RIGHT_SPEED P16 
 
 // In addition to the above mentioned pins, 5 GPIO pins are
 // available via the expansion port. These can be configured as
