@@ -46,7 +46,7 @@ Platform::Platform(IOExpander * io) :
 
 SELFTEST_EVENT Platform::LineSensorTest()
 {
-    // display.print("- TEST - LINE SENSORS -");
+    printf("- TEST - LINE SENSORS -\r\n");
     display.printChar('L');
     wait_ms(500);
     while (true)
@@ -66,18 +66,14 @@ SELFTEST_EVENT Platform::LineSensorTest()
 
 SELFTEST_EVENT Platform::RangeSensorTest()
 {
-//    display.print("- TEST - RANGE SENSORS -");
+    printf("- TEST - RANGE SENSORS -\r\n");
     display.printChar('R');
     wait_ms(500);
     while (true)
     {
-        uint16_t left = front_sensor.leftRange();
-        uint16_t center = front_sensor.centerRange();
-        uint16_t right = front_sensor.rightRange();
-
-        printf("L: %04d C: %04d: R: %04d\r\n", left, center, right);
+        RenderRangeSensorResponse(front_sensor.leftRange(), front_sensor.centerRange(), front_sensor.rightRange());
+//        printf("L: %04d C: %04d: R: %04d\r\n", front_sensor.leftRange(), front_sensor.centerRange(), front_sensor.rightRange());
         
-        // TODO: VISUALIZE
         if (0 == buttonB.read()) 
             return NEXT_TEST;
         if (0 == buttonA.read())
@@ -87,6 +83,7 @@ SELFTEST_EVENT Platform::RangeSensorTest()
 
 SELFTEST_EVENT Platform::MotorTest()
 {
+    printf("- TEST - MOTORS -\r\n");
     display.printChar('M');
     wait_ms(500);
 

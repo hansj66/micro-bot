@@ -13,6 +13,7 @@ MicroBitImage arrowRight[ARROWS] = {
 };
 
 MicroBitImage lineSensorCanvas("0,0,0,0,0\n0,0,0,0,0\n0,0,0,0,0\n0,0,0,0,0\n0,0,0,0,0\n");
+MicroBitImage rangeSensorCanvas("0,0,0,0,0\n0,0,0,0,0\n0,0,0,0,0\n0,0,0,0,0\n0,0,0,0,0\n");
 MicroBitImage blankCanvas("0,0,0,0,0\n0,0,0,0,0\n0,0,0,0,0\n0,0,0,0,0\n0,0,0,0,0\n");
 
 void RightArrowAnimation()
@@ -44,9 +45,30 @@ void RenderLineSensorResponse(int nw, int ne, int sw, int se)
     wait_ms(50);
 }
 
-void RenderRangeSensorResponse(int leftRange, int centerRange, int RightRange)
+int limitRange(int value)
 {
+    if (value > 500)
+        value = 500;
+    return value;
+}
 
+void RenderRangeSensorResponse(int left, int center, int right)
+{
+    // Fudging the numbers a bit and limiting the range in order
+    // to get a better test visualization
+
+    left = limitRange(left);
+    center = limitRange(center);
+    right = limitRange(right);
+
+    rangeSensorCanvas.setPixelValue(4, (left-20) / 50, 1);
+    rangeSensorCanvas.setPixelValue(2, (center-20) / 50, 1);
+    rangeSensorCanvas.setPixelValue(0, (right-20) / 50, 1);
+    display.print(rangeSensorCanvas);
+    wait_ms(50);
+    rangeSensorCanvas.clear();
+    display.print(blankCanvas);
+    wait_ms(50);
 }
 
 
