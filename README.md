@@ -1,11 +1,11 @@
 # Micro:bit sumo robot
-Firmware for the [TimeExpander.com](https://www.timeexpander.com/) Micro:bit based robot
+Firmware and hardware design files for the [TimeExpander.com](https://www.timeexpander.com/) Micro:bit based robot
 
-The bot features two motor bridges, 3 x time of flight sensors (optional), 4 x reflective object sensors (optional) and a GPIO Expander. 
+The bot features two motor bridges, 3 x time of flight sensors, 4 x reflective object sensors and a GPIO Expander. 
 
-The jury is still out regarding the need for three time-of-flight sensors. The three front sensors allows the bot to home in on targets faster (without having to rotate on its axis and scanning for objects). The tradeoff being spending more time talking to sensors...
+Toolchain for building the firmware is the mBed online compiler.
 
-The bot is fully functional, but using PWM motor control seems to cause random crashes after a minute or two of running. I haven't been able to track this bug down yet (but, rest assured - I am going to ;)). It may be caused by a layout issue in the PCB, a missing decoupling capacitor or two, or a problem with the PWM driver in the framework. 
+You can watch one of the demo state machines in action here: https://youtu.be/_6B225iNg58
 
 # Bill of materials
 * 1 x Main PCB (TimeExpander.com)
