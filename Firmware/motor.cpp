@@ -26,11 +26,6 @@
 // 2)   The left and right throttle multiplier will have to be calibrated
 //      for the bot to be able to move in a straight line over longer 
 //      distances. 
-// 3)   There are issues with PWM motor control in the current version. Using PWM 
-//      seems to cause random crashes after a while (typically one to two minutes)
-//      It is currently unclear if this is an issue with the nrf51 PWM driver for
-//      the arduino framework, or if it is a result of a layout issue in the PCB
-
 
 MicroBitPin left(1, LEFT_SPEED, PIN_CAPABILITY_AD);
 MicroBitPin right(2, RIGHT_SPEED, PIN_CAPABILITY_AD);
