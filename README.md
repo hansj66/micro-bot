@@ -7,7 +7,14 @@ Toolchain for building the firmware is the mBed online compiler.
 
 You can watch one of the demo state machines in action here: https://youtu.be/_6B225iNg58
 
-# Bill of materials
+# V2.1
+There is an untested v2.1 in the Hardware folder. [2.1 Readme](https://github.com/rosmo-robot/micro-bot/tree/master/Hardware/V2.1#readme)
+
+# V2
+
+This is the latest tested version.
+
+# v2 Bill of materials
 * 1 x Main PCB (https://github.com/hansj66/micro-bot/blob/master/Hardware/minisumo_v2.brd)
 * 4 x line sensor PCBs (https://github.com/hansj66/micro-bot/blob/master/Hardware/minisumo_sensor.brd)
 * 2 x Wheels (AliExpress)
