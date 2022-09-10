@@ -11,3 +11,9 @@
 * TOF pins changed to support [Breakout garden TOF sensors](https://shop.pimoroni.com/collections/breakout-garden?q=tof)
 
 * Uses screw terminal block for power
+
+Possible future development
+
+* Have on-board ESP32-dev-C 
+* Use https://www.sparkfun.com/products/9453
+* Use https://www.aliexpress.com/item/1005002635531425.html
