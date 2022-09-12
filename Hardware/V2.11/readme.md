@@ -12,14 +12,14 @@
 
 * Uses screw terminal block for power
 
-Possible future development
+### Possible future development
 
 * Use https://www.sparkfun.com/products/9453
 * Use https://www.aliexpress.com/item/1005002635531425.html
 
-Firmware to investigate
+### Firmware to investigate
 
-https://github.com/Ezward/Esp32CameraRover2
-https://github.com/platisd/smartcar_shield/
-https://github.com/robokoding/sumorobot-firmware
-https://github.com/hadabot/
+- https://github.com/Ezward/Esp32CameraRover2
+- https://github.com/platisd/smartcar_shield/
+- https://github.com/robokoding/sumorobot-firmware
+- https://github.com/hadabot/
