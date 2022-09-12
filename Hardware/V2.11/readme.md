@@ -14,6 +14,12 @@
 
 Possible future development
 
-* Have on-board ESP32-dev-C 
 * Use https://www.sparkfun.com/products/9453
 * Use https://www.aliexpress.com/item/1005002635531425.html
+
+Firmware to investigate
+
+https://github.com/Ezward/Esp32CameraRover2
+https://github.com/platisd/smartcar_shield/
+https://github.com/robokoding/sumorobot-firmware
+https://github.com/hadabot/
