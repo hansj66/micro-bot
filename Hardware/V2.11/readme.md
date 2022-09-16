@@ -13,6 +13,8 @@
 * Use https://www.sparkfun.com/products/9453
 * Use https://www.aliexpress.com/item/1005002635531425.html
 * Use https://www.aliexpress.com/item/1005003985685357.html / https://www.aliexpress.com/item/1005003879181886.html
+* N20 mount https://www.aliexpress.com/item/1005001872298274.html
+* N20 https://www.aliexpress.com/item/1005002307903318.html
 
 ### Firmware to investigate
 
