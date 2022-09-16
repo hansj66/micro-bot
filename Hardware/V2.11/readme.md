@@ -1,5 +1,7 @@
 ![Board in Kicad](https://github.com/rosmo-robot/micro-bot/blob/master/Hardware/V2.11/v2.11.png)
 
+## Rosmo:bot
+
 * Derived from [@hansj66 board](https://github.com/rosmo-robot/micro-bot)
 * Adds footprint for screw terminal for power in
 * Board in Kicad 6
