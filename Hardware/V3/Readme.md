@@ -1,0 +1,1 @@
+Adds 'Rosmo Pinout'
