@@ -1,6 +1,6 @@
 Adds 'Rosmo Pinout'
 
-![](https://github.com/rosmo-robot/micro-bot/blob/master/Hardware/V3/Rosmo:Botv3.png)
+![](https://github.com/rosmo-robot/micro-bot/blob/master/Hardware/V3/Front.JPG)
 
 
 ## Rosmo:bot
