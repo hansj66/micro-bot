@@ -6,7 +6,7 @@ Adds 'Rosmo Pinout'
 ## Rosmo:bot
 
 * Derived from [@hansj66 board](https://github.com/rosmo-robot/micro-bot)
-* Board in Kicad 6
+* Board in Kicad 6, [View Gerbers here](https://365.altium.com/files/A9099314-37E7-44C2-9AE0-B9F88A4FC862)
 * Uses external lipo powerboard
 * Encoders added to support [Bringsmart GB12-N20B](http://www.bringsmart.com/pd.jsp?id=154) Available [from Aliexpress](https://www.aliexpress.com/item/1005002307903318.html)
 * TOF pins changed to support [Breakout garden TOF sensors](https://shop.pimoroni.com/collections/breakout-garden?q=tof)
