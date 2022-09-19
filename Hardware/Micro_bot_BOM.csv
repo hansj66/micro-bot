@@ -1,0 +1,21 @@
+,,,,,,,
+,,,BOM,,,,
+,,,,,,,
+,,,,,,,
+Item #,*Designator,*Qty,Manufacturer,*Mfg Part #,Description / Value,*Package/Footprint ,Your Instructions / Notes
+1,C1,1,LCSC,C2763765,C1 100uF ALUMINUM_WURTH_100UF_865080243007 TimeExpander2 (24.257 13.2715) R270,SMD,https://lcsc.com/product-detail/Pre-ordered-RLCs_Wurth-Elektronik-865080243007_C2164012.html
+2,"R9, R10, R11, R12,R13",5,LCSC,C2763765,R9       10k                    RES_0402                          TimeExpander2 (53.1495 57.3405)     R90,402,https://lcsc.com/product-detail/Chip-Resistor-Surface-Mount_SANYEAR-SY0402DE10KP_C2763765.html
+3,S1,1,LCSC,C221666,S1       POWER                  SWITCH_JS202011SCQN               TimeExpander2 (10.541 18.415)       R90,SMD,https://www.lcsc.com/product-detail/Others_C-K-JS202011SCQN_C221666.html
+4,U1,1,LCSC,C434591,U1 L293DD SO-20 TimeExpander2 (62.357 38.735) R90,SOP-20,https://lcsc.com/product-detail/Motor-Driver-ICs_HGSEMI-L293DDM_C434591.html
+5,U3,1,LCSC,C38253,U3 TXB0106PWRPW16-L PW16-L TimeExpander2 (82.931 39.751) R90,TSSOP-16,https://lcsc.com/product-detail/Translators-Level-Shifters_Texas-Instruments-TXB0106PWR_C38253.html
+6,U4,1,??,,U4 BBC Micro:bit CYCLONE_MICROBIT_VERTICAL TimeExpander2 (50.165 64.9605) R270,Microbit edge,https://www.aliexpress.com/item/1005004070427086.html
+7,"U5, U6, U7,",3,LCSC,C2935930,U5       VL53LOX - Right        VL53LOX                           TimeExpander2 (92.202 33.02)        R180,"Push-Pull,P=2.54mm",https://lcsc.com/product-detail/Pin-Headers_DEALON-DZ254W-11-05-65_C2935930.html
+8,U8,1,LCSC,C465732,TCA9555PWR,24-TSSOP,https://lcsc.com/product-detail/I-O-Expanders_Texas-Instruments-TCA9555PWR_C465732.html
+9,"J1, J2.5",2,LCSC,C274409,JST-Sales-America-B6B-PH-K-LF-SN,"Straight,P=2mm",https://lcsc.com/product-detail/Wire-To-Board-Wire-To-Wire-Connector_JST-Sales-America-B6B-PH-K-LF-SN_C274409.html
+"20;""U9"";""SparkFun QRE1113"";1;""NW"";;;",U9,,DNP,,DNP,,DNP
+,U14,,LCSC,,"21;""U14"";""PinHeader_1x07_P2.54mm_Vertical"";1;""Conn_01x07"";;;",,https://lcsc.com/product-detail/Female-Headers_DEALON-DM254R-11-07-85_C2935978.html
+,U11,,LCSC,,"22;""U11"";""PinHeader_2x02_P2.54mm_Vertical"";1;""Conn_02x02_Top_Bottom"";;;",,https://lcsc.com/product-detail/Female-Headers_DEALON-DM254R-11-02-85_C2935973.html
+,JP1,,LCSC,,8p,,https://lcsc.com/product-detail/Female-Headers_DEALON-DM254R-11-08-85_C2935979.html
+,JP2,,LCSC,,6p,,https://lcsc.com/product-detail/Female-Headers_DEALON-DM254R-11-06-85_C2935977.html
+,J3,,LCSC,,4p,,https://lcsc.com/product-detail/Female-Headers_DEALON-DM254R-11-04-85_C2935975.html
+,"U15, U16",,LCSC,,5p,,https://lcsc.com/product-detail/Female-Headers_XFCN-PM254V-11-05-H85_C541852.html
