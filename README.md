@@ -7,8 +7,8 @@ Toolchain for building the firmware is the mBed online compiler.
 
 You can watch one of the demo state machines in action here: https://youtu.be/_6B225iNg58
 
-# V2.11
-There is an untested v2.11 in the Hardware folder. [See 2.11 Readme](https://github.com/rosmo-robot/micro-bot/blob/master/Hardware/V2.11/readme.md)
+# V3
+There is an untested v3 in the Hardware folder. [See v3 Readme](https://github.com/rosmo-robot/micro-bot/tree/master/Hardware/V3#readme)
 
 # V2
 
