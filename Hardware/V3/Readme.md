@@ -21,7 +21,8 @@ Adds 'Rosmo Pinout'
 
 ## Optional extras
 
-* Use https://www.sparkfun.com/products/9453
+* https://www.sparkfun.com/products/9453
+* USB https://www.aliexpress.com/item/1005004581345351.html
 
 ### Possible future development
 
