@@ -1,2 +1,6 @@
-bom: https://raw.githubusercontent.com/rosmo-robot/micro-bot/master/Hardware/V3/Micro_bot_BOM.csv
+bom: Hardware/V3/Micro_bot_BOM.csv
 color: white
+eda:
+    type: kicad
+    pcb: Hardware/V3/kicad6/minisumo_v3.kicad_pcb
+gerbers: Hardware/V3/Gerbers 
