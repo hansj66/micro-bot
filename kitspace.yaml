@@ -1,4 +1,4 @@
-bom: Hardware/V3/Micro_bot_BOM.csv
+bom: Hardware/V3/Rosmo%20Bot-V3-BOM.csv
 color: white
 eda:
     type: kicad
