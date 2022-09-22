@@ -30,7 +30,9 @@ Adds 'Rosmo Pinout'
 
 ### Firmware to investigate
 
-- https://github.com/Ezward/Esp32CameraRover2
+- https://github.com/AllAboutCode/EduBlocks
 - https://github.com/platisd/smartcar_shield/
+- https://github.com/jonathanrandall/edge_impule_bird_person_scene
 - https://github.com/robokoding/sumorobot-firmware
 - https://github.com/hadabot/
+- https://github.com/Ezward/Esp32CameraRover2
