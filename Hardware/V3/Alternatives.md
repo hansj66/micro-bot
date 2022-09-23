@@ -1,6 +1,6 @@
 |  Robot | price (ex Micro:bit) | OSHW  | Encoder  |  Notes |
 |---|---|---|---|---|
-| Rosmo:Bot  |  $20 + $10 battery + $10 infrared| Yes  |  Yes | Expandable, Lipo |
+| Rosmo:Bot  |  $20 + +$15 motors + $10 battery + $10 infrared| Yes  |  Yes | Expandable, Lipo |
 |  Micro Maqueen Plus | £47  | No  | Yes  | https://thepihut.com/products/micro-maqueen-plus-v2-18650-advanced-stem-education-robot-for-micro-bit?variant=41613473185987&currency=GBP&utm_medium=product_sync&utm_source=google&utm_content=sag_organic&utm_campaign=sag_organic&srsltid=AR5OiO20Ri_UTMWknB8NF0ow-0Ckeaq26QNnSsucjtewtyap4r4vQI4pwmk  |
 | MiniBit  |   |   |   | https://cpc.farnell.com/4tronix/minibit/minibit-robot-for-micro-bit/dp/ED00479?mckv=s_dc|pcrid|224679642167|kword||match||plid||slid||product|ED00479|pgrid|47129782516|ptaid|pla-638482420938|&CMP=KNC-GUK-CPC-SHOPPING-945765023-47129782516-ED00479&s_kwcid=AL!5616!3!224679642167!!!network}!638482420938!&gclid=Cj0KCQjwsrWZBhC4ARIsAGGUJup0XxiZLQBPG_VI9t4-pBcd7UeRV-wedqPchiJl1MlpOidvUYZ1EV8aAh9KEALw_wcB  |
 | Kittenbot LFR   | £95  |   |   |   |
