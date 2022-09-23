@@ -14,7 +14,7 @@ Adds 'Rosmo Pinout'
 
 ## Parts
 * Wheels https://www.aliexpress.com/item/32837924070.html
-* N20 mount https://www.aliexpress.com/item/1005001872298274.html
+* N20 mount https://www.aliexpress.com/item/4000099097725.html
 * N20 https://www.aliexpress.com/item/1005002307903318.html
 * Powerbank https://www.aliexpress.com/item/1005002635531425.html
 * Battery https://www.aliexpress.com/item/1005004385519421.html
