@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "minisumo_v2-eagle-import")(type "KiCad")(uri "${KIPRJMOD}/minisumo_v2-eagle-import.kicad_sym")(options "")(descr ""))
+)

@@ -1,0 +1,41 @@
+title: Rosmo:Bot
+description: A PCB to make a small robot
+intended-use: Robots for educational and research purposes
+keywords:
+  - robot
+  - robotics
+  - null
+project-link: https://rosmo.io/
+image: https://raw.githubusercontent.com/rosmo-robot/micro-bot/master/Hardware/V3/Front.JPG
+made: true
+made-independently: false
+license:
+  hardware: CERN-OHL-P-2.0
+  documentation: CC-BY-4.0
+  software: MIT
+licensor:
+  name: Sam Rossiter
+  email: contact@rosmo.io
+okh-manifest-version: 1.0.0
+date-created: 2022-09-23
+date-updated: 2022-09-21
+manifest-author:
+  name: Sam Rossiter
+  email: contact@rosmo.io
+manifest-language: en-GB
+contact:
+  social:
+    - platform: Twitter
+      user-handle: "@rosmo_robot"
+design-files:
+  - path: https://github.com/rosmo-robot/micro-bot/tree/master/Hardware/V3/kicad6
+    title: PCB Kicad
+schematics:
+  - path: https://github.com/rosmo-robot/micro-bot/blob/master/Hardware/V3/kicad6/minisumo_v3.kicad_sch
+    title: Kicad Schematic
+bom: https://github.com/rosmo-robot/micro-bot/blob/master/Hardware/V3/Rosmo%20Bot-V3-BOM.xlsx
+manufacturing-files:
+  - path: https://github.com/rosmo-robot/micro-bot/tree/master/Hardware/V3/Gerbers
+    title: Gerbers
+variant-of:
+  web: https://github.com/hansj66/micro-bot

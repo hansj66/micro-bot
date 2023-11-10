@@ -1,0 +1,6 @@
+bom: Hardware/V3/Rosmo%20Bot-V3-BOM.csv
+color: white
+eda:
+    type: kicad
+    pcb: Hardware/V3/kicad6/minisumo_v3.kicad_pcb
+gerbers: Hardware/V3/Gerbers 

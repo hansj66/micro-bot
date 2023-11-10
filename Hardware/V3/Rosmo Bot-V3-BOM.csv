@@ -1,0 +1,19 @@
+Comment,Designator,Footprint,LCSC part number
+" 3A Shrouded Square Pins 2.54mm 6mm 1 5 2.54mm 1x5P Push-Pull,P=2.54mm Pin Headers ROHS ","U5, U6, U7,",2.54mm,C2935930
+"1x6P PH 1 2mm 6 Brass Straight,P=2mm Wire To Board / Wire To Wire Connector ROHS ","J1, J2.5",2mm,C274409
+"2.54mm 3A Straight 1x7P 8.5mm Top 7 1 Square Holes Straight,P=2.54mm  Female Headers ROHS
+                  ",U14,2.54,C2935979
+"Place two at U11 -  2.54mm 3A Straight 1x2P 8.5mm Top 2 1 Square Holes Straight,P=2.54mm  Female Headers ROHS
+                  ",U11,2.54,C2935973.
+"2.54mm 3A Straight 1x8P 8.5mm Top 8 1 Square Holes Straight,P=2.54mm  Female Headers ROHS
+                  ",JP1,2.54,C2935979
+"2.54mm 3A Straight 1x6P 8.5mm Top 6 1 Square Holes Straight,P=2.54mm  Female Headers ROHS
+                  ",JP2,2.54,C2935977
+"2.54mm Brass Straight 1x5P 5 1 Straight,P=2.54mm  Female Headers ROHS
+",J3,2.54,C2935975
+"2.54mm Brass Straight 1x5P 5 1 Straight,P=2.54mm Female Headers ROHS","U15, U16",2.54,C541852
+"  Straight Square Pins 2.5mm 6mm -40℃~+105℃ 1 3mm 2 2.54mm Black Brass 1x2P Straight,P=2.54mm Pin Headers ROHS ",U2,2.54,C492401
+ 	62.5mW Thick Film Resistors 50V ±0.5% ±50ppm/℃ -55℃~+125℃ 10kΩ 0402 Chip Resistor - Surface Mount ROHS ,"R9, R10, R11, R12,R13",402,C2763765
+XL9535  	TSSOP-24 I/O Expanders ROHS ,U8,TSSOP-24,C561273
+L293DD,U1,SOP-20,C434591
+ 1.2V~3.6V Tri-State，Unidirectional Voltage Level Translators -40℃~+85℃ 1.65V~5.5V Bi-Directional Automatic direction detection Voltage Levels 1 6 100Mbps TSSOP-16 Translators / Level Shifters ROHS ,U3,TSSOP-16,C38253

@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name "minisumo_v2")(type "KiCad")(uri "$(KIPRJMOD)/minisumo_v3.pretty")(options "")(descr ""))
+  (lib (name "FP_bkp")(type "KiCad")(uri "${KIPRJMOD}/FP_bkp.pretty")(options "")(descr ""))
+)
